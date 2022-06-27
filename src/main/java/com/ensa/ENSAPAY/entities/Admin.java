@@ -12,7 +12,7 @@ import java.util.Set;
 @AttributeOverrides({
         @AttributeOverride(name = "firstName", column = @Column(name = "firstname")),
         @AttributeOverride(name = "lastName", column = @Column(name = "lastname")),
-        @AttributeOverride(name = "username", column = @Column(nullable = false)),
+        @AttributeOverride(name = "username", column = @Column(nullable = false, unique = true)),
         @AttributeOverride(name = "password", column = @Column(nullable = false)),
         @AttributeOverride(name = "role", column = @Column),
         @AttributeOverride(name = "createdAt", column = @Column),

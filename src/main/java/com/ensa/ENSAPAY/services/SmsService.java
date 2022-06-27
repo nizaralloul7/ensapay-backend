@@ -8,10 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
-public class SmsService
-{
+public class SmsService {
     private static final String TWILIO_ACCOUNT_SID = "AC2f7e4fc190d36ce96f85d5ab0e653e94";
-    private static final String TWILIO_AUTH_TOKEN = "de0e1afcae7c0d01898fce34caf19eac";
+    private static final String TWILIO_AUTH_TOKEN = "8e813cd52c217cce68bba0ec29f23fe9";
     public  ResponseEntity<String> sendSMS(String toNumber,String content){
         Twilio.init(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 

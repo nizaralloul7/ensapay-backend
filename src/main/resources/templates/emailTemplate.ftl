@@ -4,7 +4,7 @@
     <p>Bonjour <em>${lastName}</em> <em>${firstName}</em>,</p>
     <br/>
     <br/>
-    <p>Votre compte a été crée. Veuillez-vous referez au site <a href="${loginLink}" rel="link">ENSA-PAY</a> pour vous connectez en utilisant :<br/>
+    <p>Votre compte a été crée. Veuillez-vous referez au site <a href="${loginLink}" target="_blank" rel="link">ENSA-PAY</a> pour vous connectez en utilisant :<br/>
         username: <em>${username}</em> <br/>
         password: <em>${password}</em> <br/>
         <br/>

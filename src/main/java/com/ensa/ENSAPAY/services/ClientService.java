@@ -30,19 +30,19 @@ public class ClientService
         this.billRepository = billRepository;
     }
 
-    public boolean changePassword(String newPassword)
+    public void changePassword(String newPassword)
     {
-        ApplicationUser currentLoggedInUser = (ApplicationUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Client client = clientRepository.findClientByUsername(currentLoggedInUser.getUsername()).get();
+        String currentLoggedInUser = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client client = clientRepository.findClientByUsername(currentLoggedInUser).get();
 
-        if(!client.isPasswordChanged())
+
+        if(client.isPasswordChanged())
         {
-            clientRepository.changePasswordInFirstLogin(passwordEncoder.encode(newPassword), true, client.getId());
-            System.out.println("password changed successfully");
-            return false;
+            throw new IllegalStateException("Password already changed");
         }
-        System.out.println("password already changed");
-        return true;
+        System.out.println(newPassword);
+        clientRepository.changePasswordInFirstLogin(passwordEncoder.encode(newPassword), true, client.getId());
+        System.out.println("Password changed successfully");
     }
 
     public List<Client> getClients()
@@ -58,7 +58,7 @@ public class ClientService
         String appUser = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Client client = clientRepository.findClientByUsername(appUser).get();
 
-        return billRepository.findPaidBills(BillState.paid,client.getId()).get();
+        return billRepository.findPaidBills(BillState.paid.ordinal(),client.getId()).get();
     }
 
     public void createClientDemand(Client client)
@@ -67,6 +67,8 @@ public class ClientService
     }
 
     public void addClientRequest(Demande demande) {
+        demande.setPhone("+212"+demande.getPhone());
+        demande.setUsername(demande.getPhone());
         this.demandeRepository.save(demande);
     }
 
@@ -81,7 +83,7 @@ public class ClientService
         String appUser = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Client currentUser = clientRepository.findClientByUsername(appUser).get();
 
-        return billRepository.billHistory(BillState.paid, currentUser.getId()).get();
+        return billRepository.findPaidBills(BillState.paid.ordinal(), currentUser.getId()).get();
 
     }
 }

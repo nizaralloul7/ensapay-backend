@@ -12,7 +12,7 @@ import java.util.List;
 @Entity
 @AttributeOverrides({
         @AttributeOverride(name = "email", column = @Column),
-        @AttributeOverride(name = "phone", column = @Column),
+        @AttributeOverride(name = "phone", column = @Column(unique = true)),
         @AttributeOverride(name = "accountType", column = @Column)
 })
 @Data
@@ -23,7 +23,8 @@ public class Client extends ClientTemplate
     @ManyToOne
     @JoinColumn(name="created_by")
     private Agent createdBy;
-    private BigDecimal balance;
+
+    private BigDecimal balance = new BigDecimal(0);
     public Client(){
 
     }

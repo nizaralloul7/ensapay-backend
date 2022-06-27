@@ -36,19 +36,18 @@ public class AgentService
         this.emailService = emailService;
     }
 
-    public String changePassword(String newPassword)
+    public void changePassword(String newPassword)
     {
         String currentLoggedInUser = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Agent agent = agentRepository.findAgentByUsername(currentLoggedInUser).get();
 
-        if(!agent.isPasswordChanged())
+        if(agent.isPasswordChanged())
         {
-            agentRepository.changePasswordInFirstLogin(passwordEncoder.encode(newPassword), true, agent.getId());
-            System.out.println();
-            return "password changed successfully";
+            throw new IllegalStateException("Password already changed");
         }
-        System.out.println("password changed successfully");
-        return "password changed successfully";
+        System.out.println(newPassword);
+        agentRepository.changePasswordInFirstLogin(passwordEncoder.encode(newPassword), true, agent.getId());
+        System.out.println("Password changed successfully");
 
 
     }
@@ -96,15 +95,18 @@ public class AgentService
        return this.demandeRepository.findAll();
     }
 
-    public void approveDemande(Long demandeId,Boolean status)
+    public void approveDemande(Long demandeId,Boolean status,String loginLink)
     {
         if(status)
         {
             Client client = new Client(this.demandeRepository.findById(demandeId).get());
-            client.setPassword(passwordEncoder.encode("motdepasse"));
             String currentLoggedInUser = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
+            String pass = PasswordGenerator.alphaNumericString();
+            client.setPassword(passwordEncoder.encode(pass));
             Agent me = agentRepository.findAgentByUsername(currentLoggedInUser).get();
             client.setCreatedBy(me);
+            emailService.sendEmailWithTemplating(client.getEmail(),client.getUsername(),pass,client.getFirstName(),client.getLastName(),loginLink);
             this.clientRepository.save(client);
         }
 
@@ -114,6 +116,7 @@ public class AgentService
     public void addAgent(Agent agent,String loginLink)
     {
         String pass = PasswordGenerator.alphaNumericString();
+        System.out.println(pass);
         //Send Password to agent by email
         emailService.sendEmailWithTemplating(agent.getEmail(),agent.getUsername(),pass,agent.getFirstName(),agent.getLastName(),loginLink);
         agent.setRole("AGENT");

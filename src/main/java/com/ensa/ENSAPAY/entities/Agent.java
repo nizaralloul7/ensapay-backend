@@ -14,7 +14,7 @@ import java.util.List;
        // @AttributeOverride(name = "address", column = @Column),
         //@AttributeOverride(name = "email", column = @Column),
        // @AttributeOverride(name = "phone", column = @Column(nullable = false)),
-        @AttributeOverride(name = "username", column = @Column(nullable = false)),
+        @AttributeOverride(name = "username", column = @Column(nullable = false,unique = true)),
         @AttributeOverride(name = "password", column = @Column(nullable = false)),
         @AttributeOverride(name = "role", column = @Column),
         @AttributeOverride(name = "createdAt", column = @Column),

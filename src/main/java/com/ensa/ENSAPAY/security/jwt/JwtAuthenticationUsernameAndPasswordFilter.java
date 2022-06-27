@@ -40,10 +40,17 @@ public class JwtAuthenticationUsernameAndPasswordFilter extends UsernamePassword
     {
 
         UsernameAndPasswordAuthenticationRequest usernameAndPasswordAuthenticationRequest = new ObjectMapper().readValue(request.getInputStream(), UsernameAndPasswordAuthenticationRequest.class);
+
+        String role = usernameAndPasswordAuthenticationRequest.getRole();
+        System.out.println(role);
+        String usernameDomain = String.format("%s%s%s", usernameAndPasswordAuthenticationRequest.getUsername().trim(),
+                String.valueOf(Character.LINE_SEPARATOR), role);
+        System.out.println(usernameDomain);
         Authentication authentication = new UsernamePasswordAuthenticationToken(
-                usernameAndPasswordAuthenticationRequest.getUsername(),
+                usernameDomain,
                 usernameAndPasswordAuthenticationRequest.getPassword()
         );
+
         Authentication authenticate = authenticationManager.authenticate(authentication);
         return authenticate;
     }

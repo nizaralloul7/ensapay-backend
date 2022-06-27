@@ -18,7 +18,7 @@ public abstract class User
     private String lastName;
     private String role;
     // private IdentityCard identityCardType;
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
     @Column(nullable = false)
     private String password;

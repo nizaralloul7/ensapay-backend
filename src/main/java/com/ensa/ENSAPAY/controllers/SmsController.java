@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class SmsController
-{
+public class SmsController {
 	private final SmsService smsService;
 
 	public SmsController(SmsService smsService) {

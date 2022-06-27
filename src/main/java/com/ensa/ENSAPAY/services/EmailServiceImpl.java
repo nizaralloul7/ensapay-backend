@@ -19,8 +19,7 @@ public class EmailServiceImpl{
     public EmailService emailService;
 
     @SneakyThrows
-    public void sendEmailWithTemplating(String emailReceiver,String username, String password,String firstName,String lastName,String loginLink)
-    {
+    public void sendEmailWithTemplating(String emailReceiver,String username, String password,String firstName,String lastName,String loginLink){
         System.out.println(emailReceiver);
         final Email email = DefaultEmail.builder()
                 .from(new InternetAddress("ensapay5566@gmail.com", "Ensa Pay"))

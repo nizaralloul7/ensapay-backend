@@ -1,5 +1,6 @@
 package com.ensa.ENSAPAY.controllers;
 
+import com.ensa.ENSAPAY.entities.Bill;
 import com.ensa.ENSAPAY.services.CMIService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -9,7 +10,7 @@ import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 
 @RestController
-@RequestMapping(path = "/api/transact")
+@RequestMapping(path = "/api")
 public class CMIController
 {
     private final CMIService cmiService;
@@ -27,10 +28,10 @@ public class CMIController
         cmiService.payment(username,paymentAmount);
     }
 
-    @PostMapping("/bills/{billId}")
-    public void payBill(@PathVariable Long billId)
+    @PostMapping("/bills/{billId}/verify")
+    public Bill payBill(@PathVariable Long billId, @RequestBody String verificationCode)
     {
-        cmiService.payBill(billId);
+        return cmiService.confirmPayment(billId,verificationCode);
     }
 
 }

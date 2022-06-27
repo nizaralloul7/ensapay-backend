@@ -23,8 +23,9 @@ public class Unpaid
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
     private String description;
-    private String type;
+    private UnpaidType type;
     private BigDecimal amount;
+    private UnpaidState state = UnpaidState.PENDING;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     @PrePersist
@@ -37,3 +38,4 @@ public class Unpaid
         this.updatedAt = LocalDateTime.now();
     }
 }
+

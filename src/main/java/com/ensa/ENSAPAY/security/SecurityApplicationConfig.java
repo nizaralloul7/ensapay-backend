@@ -40,6 +40,7 @@ public class SecurityApplicationConfig extends WebSecurityConfigurerAdapter
     private final AdminService adminService;
     private final AgentService agentService;
     private final ClientService clientService;
+
     private final CreditorService creditorService;
 
     @Autowired
@@ -56,6 +57,8 @@ public class SecurityApplicationConfig extends WebSecurityConfigurerAdapter
     @PostConstruct
     public void adminCredentials()
     {
+
+
      /*   Creditor maroctelecom = new Creditor();
         maroctelecom.setTitle("MAROC TELECOM");
         maroctelecom.setDescription("Maroc Telecom, votre opérateur global de téléphonie fixe, mobile et internet.");
@@ -112,21 +115,6 @@ public class SecurityApplicationConfig extends WebSecurityConfigurerAdapter
 
       */
 
-    /*         Agent agent = new Agent();
-        agent.setUsername("mounia");
-        agent.setPassword(passwordEncoder.encode("motdepasse"));
-        agent.setRole("AGENT");
-        agentService.addAgent(agent);
-
-Admin admin3   = new Admin();
-            admin3.setUsername("admin");
-            admin3.setPassword(passwordEncoder.encode("admin"));
-            admin3.setRole("ADMIN");
-            adminService.addAdmin(admin3);
-
-     */
-
-
 
     }
 
@@ -156,8 +144,7 @@ Admin admin3   = new Admin();
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource()
-    {
+    CorsConfigurationSource corsConfigurationSource() {
         UrlBasedCorsConfigurationSource source = new
                 UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());

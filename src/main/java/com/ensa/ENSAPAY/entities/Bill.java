@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Table
 @Entity
@@ -25,10 +26,15 @@ public class Bill
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
-    @OneToMany
-    private List<Unpaid> unpaidList;
+    @ManyToMany
+    @JoinTable(
+            name="bill_unpaid_list",
+            joinColumns = @JoinColumn(name = "id"),
+            inverseJoinColumns = @JoinColumn( name = "unpaid_id")
+    )
+    private Set<Unpaid> unpaidList;
     private BigDecimal totalAmount;
-    private BillState state;
+    private BillState state = BillState.pending;
     private String verificationCode;
 
     private LocalDateTime createdAt;

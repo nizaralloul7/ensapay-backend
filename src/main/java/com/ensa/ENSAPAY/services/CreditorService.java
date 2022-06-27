@@ -1,8 +1,12 @@
 package com.ensa.ENSAPAY.services;
 
+import com.ensa.ENSAPAY.entities.Client;
 import com.ensa.ENSAPAY.entities.Creditor;
+import com.ensa.ENSAPAY.entities.Unpaid;
 import com.ensa.ENSAPAY.repositories.CreditorRepository;
+import com.ensa.ENSAPAY.security.auth.ApplicationUser;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

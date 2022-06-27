@@ -7,9 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class EnsapayApplicationTests {
 
 	@Test
-	void contextLoads()
-	{
-
+	void contextLoads() {
 	}
 
 }
