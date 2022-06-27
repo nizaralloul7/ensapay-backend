@@ -59,7 +59,7 @@ public class SecurityApplicationConfig extends WebSecurityConfigurerAdapter
     {
 
 
-     /*   Creditor maroctelecom = new Creditor();
+        Creditor maroctelecom = new Creditor();
         maroctelecom.setTitle("MAROC TELECOM");
         maroctelecom.setDescription("Maroc Telecom, votre opérateur global de téléphonie fixe, mobile et internet.");
         maroctelecom.setType(CreditorType.Creditor);
@@ -113,7 +113,7 @@ public class SecurityApplicationConfig extends WebSecurityConfigurerAdapter
             admin2.setRole("ADMIN");
             adminService.addAdmin(admin2);
 
-      */
+
 
 
     }
