@@ -59,11 +59,8 @@ public class CMIService
 
         if(bill.getState() != BillState.paid)
         {
-            String verificationCode = PasswordGenerator.NumericString();
-            String smsMsg = GenerateSms(verificationCode,bill);
-            smsService.sendSMS(client.getPhone(),smsMsg);
+            String verificationCode = generateVerificationCode(bill);
             System.out.println(verificationCode);
-            System.out.println("passed");
             return verificationCode;
             //billRepository.setVerificationCode(verificationCode,bill.getId());
 
@@ -73,6 +70,19 @@ public class CMIService
 
         }
         return null;
+    }
+    public void resendVerification(Long billId){
+        Bill bill = this.billRepository.getById(billId);
+        String verificationCode = generateVerificationCode(bill);
+        this.billRepository.setVerificationCode(verificationCode,bill.getId());
+    }
+    String generateVerificationCode(Bill bill){
+        String authClient = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Client client = clientRepository.findClientByUsername(authClient).get();
+        String verificationCode = PasswordGenerator.NumericString();
+        String smsMsg = GenerateSms(verificationCode,bill);
+        smsService.sendSMS(client.getPhone(),smsMsg);
+        return verificationCode;
     }
     //Methode pour confirmer le paiement d'une facture
     public Bill confirmPayment(Long billId,String verificationCode)

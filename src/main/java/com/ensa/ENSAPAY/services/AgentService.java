@@ -14,6 +14,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,6 +87,7 @@ public class AgentService
         emailService.sendEmailWithTemplating(client.getEmail(),client.getUsername(),pass,client.getFirstName(),client.getLastName(),loginLink);
         client.setRole("CLIENT");
         client.setPassword(passwordEncoder.encode(pass));
+        client.setBalance(new BigDecimal(client.getAccountType()));
         clientRepository.save(client);
     }
 
@@ -103,10 +105,12 @@ public class AgentService
             String currentLoggedInUser = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
             String pass = PasswordGenerator.alphaNumericString();
+            System.out.printf(pass);
             client.setPassword(passwordEncoder.encode(pass));
             Agent me = agentRepository.findAgentByUsername(currentLoggedInUser).get();
             client.setCreatedBy(me);
             emailService.sendEmailWithTemplating(client.getEmail(),client.getUsername(),pass,client.getFirstName(),client.getLastName(),loginLink);
+            client.setBalance(new BigDecimal(client.getAccountType()));
             this.clientRepository.save(client);
         }
 

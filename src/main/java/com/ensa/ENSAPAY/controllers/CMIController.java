@@ -34,4 +34,10 @@ public class CMIController
         return cmiService.confirmPayment(billId,verificationCode);
     }
 
+    @PostMapping("/bills/{billId}/resend")
+    public void resendCode(@PathVariable Long billId)
+    {
+        this.cmiService.resendVerification(billId);
+    }
+
 }

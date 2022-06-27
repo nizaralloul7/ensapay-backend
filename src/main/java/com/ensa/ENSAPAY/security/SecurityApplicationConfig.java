@@ -132,6 +132,8 @@ public class SecurityApplicationConfig extends WebSecurityConfigurerAdapter
                 .authorizeRequests()
                 .antMatchers("/*")
                 .permitAll()
+                .antMatchers("/api/client/create-request")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and().cors();
